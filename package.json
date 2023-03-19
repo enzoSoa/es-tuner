@@ -1,0 +1,12 @@
+{
+  "name": "e-tune",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:tuner": "pnpm -F tuner dev"
+  },
+  "keywords": [],
+  "author": "Enzo Ayrton Soares",
+  "license": "ISC"
+}
