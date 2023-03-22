@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:tuner": "pnpm -F tuner dev"
+    "start:tuner": "pnpm -F tuner dev --host"
   },
   "keywords": [],
   "author": "Enzo Ayrton Soares",
