@@ -2,16 +2,17 @@ import {Canvas} from "@react-three/fiber";
 import {Instrument} from "./Instrument";
 import {PerspectiveCamera, Vector3} from "three";
 import {MouseEventHandler, TouchEventHandler, useEffect, useState} from "react";
+import {Lights} from "./Lights";
 
 export function Renderer() {
   const [aimedPosX, setAimedPosX] = useState(0);
   const [posX, setPosX] = useState(0);
 
-  const camera = new PerspectiveCamera(30, window.innerHeight / window.innerWidth, 1, 40000000);
-  camera.position.set(posX, 0, 2);
+  const camera = new PerspectiveCamera(80, window.innerHeight / window.innerWidth, .01, 40000000);
+  camera.position.set(posX, 0, 1);
   camera.lookAt(new Vector3(posX, 0, 0));
 
-  const instrumentsGap = 0.5;
+  const instrumentsGap = 0.45;
   const instruments = ['guitar', 'guitar', 'guitar', 'guitar', 'guitar']
 
   const [isScrolling, setIsScrolling] = useState(false);
@@ -34,7 +35,7 @@ export function Renderer() {
       const maxScroll = (instruments.length - 1) * instrumentsGap;
       const movement = mousePercentage * maxScroll + scrollLeft;
 
-      setAimedPosX(Math.round(Math.min(Math.max(movement, 0), maxScroll) * 2) / 2);
+      setAimedPosX(Math.round(Math.min(Math.max(movement, 0), maxScroll) / instrumentsGap) * instrumentsGap);
     };
 
     const handleMouseMove = (event: MouseEvent) => handleMove(event.screenX);
@@ -66,14 +67,15 @@ export function Renderer() {
 
 
   return <Canvas
-    style={{height: '100vh', width: '100vw', cursor: 'grab'}}
+    style={{height: '100vh', width: '100vw', cursor: 'grab', background: 'linear-gradient(140deg, #000519, #000000)'}}
     camera={camera}
     onMouseDown={handleMouseDown}
     onTouchStart={handleTouchStart}
     onMouseUp={handleMouseUp}
     onTouchEnd={handleTouchStart}
   >
-    <ambientLight intensity={1}/>
+    <ambientLight intensity={1} color={"#000519"}/>
+    <Lights posX={posX}/>
     {instruments.map((instrument, index) => <Instrument key={`instrument-${index}`} name={'guitar'}
                                                         position={instrumentsGap * index}/>)}
   </Canvas>;
