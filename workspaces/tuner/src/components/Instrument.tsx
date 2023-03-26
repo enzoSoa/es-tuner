@@ -1,5 +1,6 @@
-import {useLoader} from "@react-three/fiber";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+import {useLoader} from "@react-three/fiber";
+import {useMemo} from "react";
 
 interface Props{
   name: string;
@@ -7,9 +8,14 @@ interface Props{
 }
 
 export function Instrument({name, position}: Props) {
-  const instrumentModel = useLoader(GLTFLoader, `${name}.glb`);
-  console.log(instrumentModel.scene);
-  instrumentModel.scene.position.set(position,0,0);
+  const {scene} = useLoader(GLTFLoader, `${name}.glb`);
 
-  return <primitive object={instrumentModel.scene}/>;
+  // return gltf as a new mesh
+  const mesh = useMemo(() => {
+    const group = scene.clone();
+    group.position.set(position, 0, 0);
+    return group;
+  }, [scene, position]);
+
+  return <primitive object={mesh}/>;
 }
