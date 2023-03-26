@@ -1,7 +1,7 @@
 import {Canvas} from "@react-three/fiber";
 import {Instrument} from "./Instrument";
 import {PerspectiveCamera, Vector3} from "three";
-import {MouseEventHandler, useEffect, useState} from "react";
+import {MouseEventHandler, TouchEventHandler, useEffect, useState} from "react";
 
 export function Renderer() {
   const [aimedPosX, setAimedPosX] = useState(0);
@@ -25,8 +25,10 @@ export function Renderer() {
   }, [aimedPosX,posX]);
 
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      const mouseXMove = initialMousePosition - event.screenX;
+
+
+    const handleMove = (screenX: number) => {
+      const mouseXMove = initialMousePosition - screenX;
       const mousePercentage = mouseXMove / window.innerWidth * 2;
 
       const maxScroll = (instruments.length - 1) * instrumentsGap;
@@ -35,21 +37,31 @@ export function Renderer() {
       setAimedPosX(Math.round(Math.min(Math.max(movement, 0), maxScroll) * 2) / 2);
     };
 
+    const handleMouseMove = (event: MouseEvent) => handleMove(event.screenX);
+    const handleTouchMove = (event: TouchEvent) => handleMove(event.touches[0].screenX);
+
     if (isScrolling) {
       document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('touchmove', handleTouchMove);
     } else {
       document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('touchmove', handleTouchMove);
     }
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('touchmove', handleTouchMove);
     };
   }, [initialMousePosition, isScrolling, scrollLeft]);
 
-  const handleMouseDown: MouseEventHandler = (event) => {
+  const startScrolling = (screenX: number) => {
     setIsScrolling(true);
-    setInitialMousePosition(event.nativeEvent.screenX);
+    setInitialMousePosition(screenX);
     setScrollLeft(posX);
-  };
+  }
+
+  const handleMouseDown: MouseEventHandler = ({nativeEvent}) => startScrolling(nativeEvent.screenX);
+  const handleTouchStart: TouchEventHandler = ({nativeEvent}) => startScrolling(nativeEvent.touches[0].screenX);
+
   const handleMouseUp = () => setIsScrolling(false);
 
 
@@ -57,7 +69,9 @@ export function Renderer() {
     style={{height: '100vh', width: '100vw', cursor: 'grab'}}
     camera={camera}
     onMouseDown={handleMouseDown}
+    onTouchStart={handleTouchStart}
     onMouseUp={handleMouseUp}
+    onTouchEnd={handleTouchStart}
   >
     <ambientLight intensity={1}/>
     {instruments.map((instrument, index) => <Instrument key={`instrument-${index}`} name={'guitar'}
