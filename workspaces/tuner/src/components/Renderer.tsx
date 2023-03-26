@@ -7,8 +7,8 @@ export function Renderer() {
   const [aimedPosX, setAimedPosX] = useState(0);
   const [posX, setPosX] = useState(0);
 
-  const camera = new PerspectiveCamera(2, window.innerHeight / window.innerWidth, 1, 40000000);
-  camera.position.set(posX, 0, 50);
+  const camera = new PerspectiveCamera(30, window.innerHeight / window.innerWidth, 1, 40000000);
+  camera.position.set(posX, 0, 2);
   camera.lookAt(new Vector3(posX, 0, 0));
 
   const instrumentsGap = 0.5;
