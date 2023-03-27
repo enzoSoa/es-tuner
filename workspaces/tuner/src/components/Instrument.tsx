@@ -8,7 +8,7 @@ interface Props{
 }
 
 export function Instrument({name, position}: Props) {
-  const {scene} = useLoader(GLTFLoader, `${name}.glb`);
+  const {scene} = useLoader(GLTFLoader, `https://models.estuner.fr/${name}.glb`);
 
   const mesh = useMemo(() => {
     const group = scene.clone();
