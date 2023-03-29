@@ -12,17 +12,19 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
   const [aimedCameraPositionX, setAimedCameraPositionX] = useState(0);
   const [cursor, setCursor] = useState(0);
   const {camera} = useThree();
+
   const instrumentsGap = 0.5;
+  const instrumentsByScroll = 2;
 
   useFrame(() => {
     if (cursor !== aimedCameraPositionX) {
       if (Math.abs(cursor - aimedCameraPositionX) < 0.01) setCursor(aimedCameraPositionX);
-      setCursor(cursor + (aimedCameraPositionX - cursor) / 15);
+      setCursor(cursor + (aimedCameraPositionX - cursor) / 25);
     }
 
     if (camera.position.x !== cursor) {
       if (Math.abs(camera.position.x - cursor) < 0.01) handleCameraChange(cursor);
-      handleCameraChange(camera.position.x + (cursor - camera.position.x) / 30);
+      handleCameraChange(camera.position.x + (cursor - camera.position.x) / 10);
     }
   });
 
@@ -36,8 +38,8 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
       const sliderWidth = (instruments.length-1) * instrumentsGap;
 
       const delta = number - cursorInitialPosition;
-      const windowPourcentage = delta / window.innerWidth * 2;
-      const cameraDelta = sliderWidth * windowPourcentage;
+      const windowPourcentage = delta / window.innerWidth;
+      const cameraDelta = instrumentsByScroll * windowPourcentage;
       const movement = cameraDelta + cameraInitialPosition;
 
       const newCameraPosition = Math.floor(movement / instrumentsGap) * instrumentsGap;
