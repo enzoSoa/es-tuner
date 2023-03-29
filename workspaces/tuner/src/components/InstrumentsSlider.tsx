@@ -14,7 +14,7 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
   const {camera} = useThree();
 
   const instrumentsGap = 0.5;
-  const instrumentsByScroll = 2;
+  const instrumentsByScroll = 4;
 
   useFrame(() => {
     if (cursor !== aimedCameraPositionX) {
@@ -40,7 +40,7 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
       const delta = number - cursorInitialPosition;
       const windowPourcentage = delta / window.innerWidth;
       const cameraDelta = instrumentsByScroll * windowPourcentage;
-      const movement = cameraDelta + cameraInitialPosition;
+      const movement = cameraInitialPosition - cameraDelta;
 
       const newCameraPosition = Math.floor(movement / instrumentsGap) * instrumentsGap;
 
