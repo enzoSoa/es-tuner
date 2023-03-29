@@ -5,42 +5,47 @@ import {Lights} from "./Lights";
 
 interface Props {
   instruments: string[];
+  handleCameraChange: (newPos: number) => void;
 }
 
-export function InstrumentsSlider({instruments}: Props) {
+export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
+  const [aimedCameraPositionX, setAimedCameraPositionX] = useState(0);
+  const [cursor, setCursor] = useState(0);
   const {camera} = useThree();
-  const [aimedCameraPosition, setAimedCameraPosition] = useState(0);
-  const [posX, setPosX] = useState(camera.position.x);
-
   const instrumentsGap = 0.5;
+
   useFrame(() => {
-    if (camera.position.x !== aimedCameraPosition) {
-      camera.position.x += (aimedCameraPosition - camera.position.x) * 0.05;
-      setPosX(camera.position.x);
+    if (cursor !== aimedCameraPositionX) {
+      if (Math.abs(cursor - aimedCameraPositionX) < 0.01) setCursor(aimedCameraPositionX);
+      setCursor(cursor + (aimedCameraPositionX - cursor) / 15);
+    }
+
+    if (camera.position.x !== cursor) {
+      if (Math.abs(camera.position.x - cursor) < 0.01) handleCameraChange(cursor);
+      handleCameraChange(camera.position.x + (cursor - camera.position.x) / 30);
     }
   });
 
   useEffect(() => {
-    let cameraInitialPosition = 0;
+    let cameraInitialPosition = camera.position.x;
     let cursorInitialPosition = 0;
 
     const handleMouseMovement = (event: MouseEvent) => move(event.clientX);
     const handleTouchMovement = (event: TouchEvent) => move(event.touches[0].clientX);
     const move = (number: number) => {
+      const sliderWidth = (instruments.length-1) * instrumentsGap;
+
       const delta = number - cursorInitialPosition;
-      const screenPercentage = delta / window.innerWidth;
-      const cameraDelta = screenPercentage * 2;
+      const windowPourcentage = delta / window.innerWidth * 2;
+      const cameraDelta = sliderWidth * windowPourcentage;
+      const movement = cameraDelta + cameraInitialPosition;
 
-      const movement = cameraInitialPosition + cameraDelta;
+      const newCameraPosition = Math.floor(movement / instrumentsGap) * instrumentsGap;
 
-      console.log(movement);
-      // setAimedCameraPosition(movement);
-      cameraInitialPosition = movement;
-      cursorInitialPosition = number;
+      setAimedCameraPositionX(Math.max(Math.min(newCameraPosition, sliderWidth), 0));
     };
 
     const handleMouseDown = (event: MouseEvent) => {
-      console.log('down');
       startMovement(event.clientX);
       window.addEventListener('mouseup', handleMouseUp);
       window.addEventListener('mousemove', handleMouseMovement);
@@ -53,12 +58,11 @@ export function InstrumentsSlider({instruments}: Props) {
       window.removeEventListener('touchstart', handleTouchStart);
     };
     const startMovement = (number: number) => {
-      cameraInitialPosition = posX;
+      cameraInitialPosition = camera.position.x;
       cursorInitialPosition = number;
     };
 
     const handleMouseUp = () => {
-      console.log('up');
       window.addEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMovement);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -81,11 +85,11 @@ export function InstrumentsSlider({instruments}: Props) {
       window.removeEventListener('touchmove', handleTouchMovement);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  });
+  }, []);
 
 
   return <group>
-    <Lights posX={posX}/>
+    <Lights posX={cursor}/>
     {instruments.map(
       (instrument, index) => <Instrument key={index} name={instrument} position={index * instrumentsGap}/>
     )}
