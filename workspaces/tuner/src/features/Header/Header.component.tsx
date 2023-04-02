@@ -1,5 +1,8 @@
+import {HeaderLogo} from "./Header.logo";
+import {headerStyle} from "./Header.style";
+
 export function HeaderComponent() {
-  return <header>
-    <h1>estuner</h1>
+  return <header css={headerStyle}>
+    <HeaderLogo/>
   </header>;
 }
