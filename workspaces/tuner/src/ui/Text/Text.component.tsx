@@ -17,7 +17,6 @@ interface Props {
 
 export function TextComponent({color, selectable, type, children}: Props) {
   const classes = [textStyle(color), !selectable && nonSelectable];
-
   switch (type) {
     case "h1":
       return <h1 css={classes}>{children}</h1>;
