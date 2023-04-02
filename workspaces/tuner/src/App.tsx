@@ -1,5 +1,8 @@
-import {InstrumentSelector} from "./features";
+import {InstrumentSelector, Header} from "./features";
 
 export function App() {
-  return <InstrumentSelector/>;
+  return <>
+    <Header/>
+    <InstrumentSelector/>
+  </>;
 }
