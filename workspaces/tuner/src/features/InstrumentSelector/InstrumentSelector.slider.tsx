@@ -1,14 +1,14 @@
 import {useFrame, useThree} from "@react-three/fiber";
-import {Instrument} from "./Instrument";
+import {InstrumentSelectorModel} from "./InstrumentSelector.model";
 import {useEffect, useState} from "react";
-import {Lights} from "./Lights";
+import {InstrumentSelectorLights} from "./InstrumentSelector.lights";
 
 interface Props {
   instruments: string[];
   handleCameraChange: (newPos: number) => void;
 }
 
-export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
+export function InstrumentSelectorSlider({instruments, handleCameraChange}: Props) {
   const [aimedCameraPositionX, setAimedCameraPositionX] = useState(0);
   const [cursor, setCursor] = useState(0);
   const {camera} = useThree();
@@ -91,9 +91,9 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
 
 
   return <group>
-    <Lights posX={cursor}/>
+    <InstrumentSelectorLights posX={cursor}/>
     {instruments.map(
-      (instrument, index) => <Instrument key={index} name={instrument} position={index * instrumentsGap}/>
+      (instrument, index) => <InstrumentSelectorModel key={index} name={instrument} position={index * instrumentsGap}/>
     )}
   </group>;
 }

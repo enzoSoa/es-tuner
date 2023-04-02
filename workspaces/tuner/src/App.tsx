@@ -1,5 +1,5 @@
-import {Renderer} from "./components/Renderer";
+import {InstrumentSelector} from "./features";
 
 export function App() {
-  return <Renderer/>;
+  return <InstrumentSelector/>;
 }

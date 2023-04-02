@@ -4,7 +4,7 @@ interface Props{
   posX: number;
 }
 
-export function Lights({posX}: Props) {
+export function InstrumentSelectorLights({posX}: Props) {
   const leftSpotLight = new SpotLight("#E1D3FF",0.9,3,0.16,1,0.5);
   leftSpotLight.position.set(posX - 0.95, 1.4, 1.6);
 
