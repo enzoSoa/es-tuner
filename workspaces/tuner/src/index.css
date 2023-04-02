@@ -12,3 +12,8 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+@font-face {
+    font-family: 'Roboto Flex';
+    src: url('RobotoFlex.ttf') format('truetype');
+}
