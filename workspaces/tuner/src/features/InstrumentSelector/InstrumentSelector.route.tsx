@@ -25,7 +25,6 @@ export function InstrumentSelectorRoute() {
   };
 
   return <Canvas ref={ref} style={{width: '100%', height:'100%', cursor: 'grab'}} camera={camera}>
-    <ambientLight intensity={1} color={"#000519"}/>
     <InstrumentSelectorSlider instruments={instruments} handleCameraChange={moveCamera}/>
   </Canvas>;
 }

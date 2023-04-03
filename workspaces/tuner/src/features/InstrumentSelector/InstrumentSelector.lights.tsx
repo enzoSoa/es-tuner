@@ -27,6 +27,7 @@ export function InstrumentSelectorLights({posX}: Props) {
   rightSpotLight.target = bottomTarget;
 
   return <>
+    <ambientLight intensity={1} color={"#000519"}/>
     <primitive object={leftSpotLight}/>
     <primitive object={rightSpotLight}/>
     <primitive object={pointLight}/>
