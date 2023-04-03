@@ -6,7 +6,7 @@ import {useEffect, useRef} from "react";
 export function InstrumentSelectorRoute() {
   const ref = useRef<HTMLCanvasElement>(null);
   const camera = new PerspectiveCamera(80, (ref.current?.height ?? 1) / (ref.current?.width ?? 1), .01, 40000000);
-  camera.position.set(0, 0, 1);
+  camera.position.set(0, 0, 0.7);
   camera.lookAt(new Vector3(0, 0, 0));
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function InstrumentSelectorRoute() {
 
   const instruments = ['guitar', 'guitar', 'guitar', 'guitar', 'guitar']
   const moveCamera = (newPos: number) => {
-    camera.position.set(newPos, 0, 1);
+    camera.position.x = newPos;
     camera.lookAt(new Vector3(newPos, 0, 0));
   };
 
