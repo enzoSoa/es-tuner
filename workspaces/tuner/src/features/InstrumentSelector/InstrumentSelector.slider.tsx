@@ -7,14 +7,14 @@ import {Instrument} from "../../types/instrument";
 interface Props {
   instruments: Instrument[];
   handleCameraChange: (cameraNewPosX: number) => void;
+  instrumentsGap: number;
 }
 
-export function InstrumentSelectorSlider({instruments, handleCameraChange}: Props) {
+export function InstrumentSelectorSlider({instruments, handleCameraChange, instrumentsGap}: Props) {
   const [aimedCameraPositionX, setAimedCameraPositionX] = useState(0);
   const [cursor, setCursor] = useState(0);
   const {camera} = useThree();
 
-  const instrumentsGap = 0.5;
   const instrumentsByScroll = 4;
 
   useFrame(() => {

@@ -12,7 +12,8 @@ export function InstrumentSelectorRoute() {
     initialCamera.position.set(0, 0, 0.7);
     initialCamera.lookAt(new Vector3(0, 0, 0));
     return initialCamera;
-  },[])
+  },[]);
+  const instrumentsGap = 0.5;
 
   useEffect(() => {
     if (ref.current)
@@ -34,8 +35,8 @@ export function InstrumentSelectorRoute() {
 
   return <>
     <Canvas ref={ref} style={{width: '100%', height:'100%', cursor: 'grab'}} camera={camera}>
-      <InstrumentSelectorSlider instruments={instruments} handleCameraChange={moveCamera}/>
+      <InstrumentSelectorSlider instruments={instruments} handleCameraChange={moveCamera} instrumentsGap={instrumentsGap}/>
     </Canvas>
-    <InstrumentSelectorDialog instruments={instruments} cameraPosX={xPos}/>
+    <InstrumentSelectorDialog instruments={instruments} cameraPosX={xPos} instrumentsGap={instrumentsGap}/>
   </>;
 }
