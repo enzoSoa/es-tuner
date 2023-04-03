@@ -14,7 +14,11 @@ export function InstrumentSelectorRoute() {
       camera.aspect = ref.current.height / ref.current.width;
   }, [ref]);
 
-  const instruments = ['guitar', 'guitar', 'guitar', 'guitar', 'guitar']
+  const instruments = [
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+  ]
   const moveCamera = (newPos: number) => {
     camera.position.x = newPos;
     camera.lookAt(new Vector3(newPos, 0, 0));

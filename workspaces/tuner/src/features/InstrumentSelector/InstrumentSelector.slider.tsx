@@ -2,9 +2,10 @@ import {useFrame, useThree} from "@react-three/fiber";
 import {InstrumentSelectorModel} from "./InstrumentSelector.model";
 import {useEffect, useState} from "react";
 import {InstrumentSelectorLights} from "./InstrumentSelector.lights";
+import {Instrument} from "../../types/instrument";
 
 interface Props {
-  instruments: string[];
+  instruments: Instrument[];
   handleCameraChange: (newPos: number) => void;
 }
 
@@ -93,7 +94,7 @@ export function InstrumentSelectorSlider({instruments, handleCameraChange}: Prop
   return <group>
     <InstrumentSelectorLights posX={cursor}/>
     {instruments.map(
-      (instrument, index) => <InstrumentSelectorModel key={index} name={instrument} position={index * instrumentsGap}/>
+      (instrument, index) => <InstrumentSelectorModel key={index} name={instrument.modelName} position={index * instrumentsGap}/>
     )}
   </group>;
 }
