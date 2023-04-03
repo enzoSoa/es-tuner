@@ -1,7 +1,8 @@
 import {css} from "@emotion/react";
+import {colors} from "../vars";
 
 export const textStyle = (color?: string) => css`
-  color: ${color || "#FFFFFF"};
+  color: ${color || colors.primary};
   text-transform: uppercase;
   font-family: "Roboto Flex", sans-serif;
   transition: font-weight 0.2s;
