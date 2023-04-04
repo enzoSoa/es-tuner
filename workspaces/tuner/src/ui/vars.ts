@@ -3,4 +3,5 @@ export const borderSize = 4;
 
 export const colors = {
   primary: "#FFFFFF",
+  accent: "#000000",
 };
