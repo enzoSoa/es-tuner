@@ -1,29 +1,30 @@
 import {useFrame, useThree} from "@react-three/fiber";
-import {Instrument} from "./Instrument";
+import {InstrumentSelectorModel} from "./InstrumentSelector.model";
 import {useEffect, useState} from "react";
-import {Lights} from "./Lights";
+import {InstrumentSelectorLights} from "./InstrumentSelector.lights";
+import {Instrument} from "../../types/instrument";
 
 interface Props {
-  instruments: string[];
-  handleCameraChange: (newPos: number) => void;
+  instruments: Instrument[];
+  handleCameraChange: (cameraNewPosX: number) => void;
+  instrumentsGap: number;
 }
 
-export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
+export function InstrumentSelectorSlider({instruments, handleCameraChange, instrumentsGap}: Props) {
   const [aimedCameraPositionX, setAimedCameraPositionX] = useState(0);
   const [cursor, setCursor] = useState(0);
   const {camera} = useThree();
 
-  const instrumentsGap = 0.5;
   const instrumentsByScroll = 4;
 
   useFrame(() => {
     if (cursor !== aimedCameraPositionX) {
-      if (Math.abs(cursor - aimedCameraPositionX) < 0.01) setCursor(aimedCameraPositionX);
+      if (Math.abs(cursor - aimedCameraPositionX) < 0.001) setCursor(aimedCameraPositionX);
       setCursor(cursor + (aimedCameraPositionX - cursor) / 25);
     }
 
     if (camera.position.x !== cursor) {
-      if (Math.abs(camera.position.x - cursor) < 0.01) handleCameraChange(cursor);
+      if (Math.abs(camera.position.x - cursor) < 0.001) handleCameraChange(cursor);
       handleCameraChange(camera.position.x + (cursor - camera.position.x) / 10);
     }
   });
@@ -43,7 +44,6 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
       const movement = cameraInitialPosition - cameraDelta;
 
       const newCameraPosition = Math.floor(movement / instrumentsGap) * instrumentsGap;
-
       setAimedCameraPositionX(Math.max(Math.min(newCameraPosition, sliderWidth), 0));
     };
 
@@ -91,9 +91,9 @@ export function InstrumentsSlider({instruments, handleCameraChange}: Props) {
 
 
   return <group>
-    <Lights posX={cursor}/>
+    <InstrumentSelectorLights posX={cursor}/>
     {instruments.map(
-      (instrument, index) => <Instrument key={index} name={instrument} position={index * instrumentsGap}/>
+      (instrument, index) => <InstrumentSelectorModel key={index} name={instrument.modelName} position={index * instrumentsGap}/>
     )}
   </group>;
 }

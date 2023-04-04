@@ -8,7 +8,7 @@ interface Props{
   position: number;
 }
 
-export function Instrument({name, position}: Props) {
+export function InstrumentSelectorModel({name, position}: Props) {
   const {scene} = useLoader(
     GLTFLoader,
     `https://models.estuner.fr/${name}.glb`,
