@@ -1,0 +1,1 @@
+export const degreeToRadiant = (degree: number): number => Math.PI / 180 * degree;
