@@ -1,8 +1,9 @@
 import {InstrumentSelector, Header} from "./features";
+import { GrabHandler } from "./utils";
 
 export function App() {
-  return <>
+  return <GrabHandler>
     <Header/>
     <InstrumentSelector/>
-  </>;
+  </GrabHandler>;
 }
