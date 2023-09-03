@@ -2,7 +2,6 @@ import {Canvas} from "@react-three/fiber";
 import {InstrumentSelectorWheel} from "./InstrumentSelector.wheel";
 import {PerspectiveCamera, Vector3} from "three";
 import {useEffect, useMemo, useRef, useState} from "react";
-import {InstrumentSelectorDialog} from "./InstrumentSelector.dialog";
 
 export function InstrumentSelectorRoute() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -37,6 +36,5 @@ export function InstrumentSelectorRoute() {
     <Canvas ref={ref} style={{width: '100%', height:'100%', cursor: 'grab'}} camera={camera}>
       <InstrumentSelectorWheel instruments={instruments} handleCameraChange={moveCamera} instrumentsGap={instrumentsGap}/>
     </Canvas>
-    <InstrumentSelectorDialog instruments={instruments} cameraPosX={xPos} instrumentsGap={instrumentsGap}/>
   </>;
 }

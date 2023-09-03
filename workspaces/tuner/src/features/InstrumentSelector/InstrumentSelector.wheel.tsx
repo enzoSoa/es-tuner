@@ -1,7 +1,4 @@
-import {useFrame, useThree} from "@react-three/fiber";
 import {InstrumentSelectorModel} from "./InstrumentSelector.model";
-import {useEffect, useState} from "react";
-import {InstrumentSelectorLights} from "./InstrumentSelector.lights";
 import {Instrument} from "../../types/instrument";
 
 interface Props {
