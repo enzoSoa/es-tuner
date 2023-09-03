@@ -1,11 +1,10 @@
 import {Canvas} from "@react-three/fiber";
-import {InstrumentSelectorWheel} from "./InstrumentSelector.wheel";
+import {InstrumentSelectorWheel} from "./InstrumentSelectorWheel";
 import {PerspectiveCamera, Vector3} from "three";
 import {useEffect, useMemo, useRef, useState} from "react";
 
-export function InstrumentSelectorRoute() {
+export const InstrumentSelector = () => {
   const ref = useRef<HTMLCanvasElement>(null);
-  const [xPos, setXPos] = useState(0);
   const instrumentsGap = 0.125;
   const camera = useMemo(() => {
     const initialCamera = new PerspectiveCamera(20, (ref.current?.height ?? 1) / (ref.current?.width ?? 1), .01, 40000000);
@@ -30,11 +29,10 @@ export function InstrumentSelectorRoute() {
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
   ]
-  const moveCamera = (cameraNewPosX: number) => {};
 
   return <>
     <Canvas ref={ref} style={{width: '100%', height:'100%', cursor: 'grab'}} camera={camera}>
-      <InstrumentSelectorWheel instruments={instruments} handleCameraChange={moveCamera} instrumentsGap={instrumentsGap}/>
+      <InstrumentSelectorWheel instruments={instruments} instrumentsGap={instrumentsGap}/>
     </Canvas>
   </>;
 }

@@ -2,16 +2,16 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {useLoader} from "@react-three/fiber";
 import {useMemo} from "react";
-import { degreeToRadiant, getAngleCoordinates } from "../../utils";
+import {degreeToRadiant, getAngleCoordinates} from "../../utils";
 
-interface Props{
+type Props = {
   name: string;
   instrumentNumber: number;
   instrumentsCount: number;
   instrumentsGap: number;
 }
 
-export function InstrumentSelectorModel({name, instrumentNumber, instrumentsCount, instrumentsGap}: Props) {
+export const InstrumentSelectorModel = ({name, instrumentNumber, instrumentsCount, instrumentsGap}: Props) => {
   const {scene} = useLoader(
     GLTFLoader,
     `https://models.estuner.fr/${name}.glb`,

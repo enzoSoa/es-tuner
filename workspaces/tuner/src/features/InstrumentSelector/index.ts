@@ -1,1 +1,1 @@
-export {InstrumentSelectorRoute as InstrumentSelector} from './InstrumentSelector.route';
+export * from './InstrumentSelector';

@@ -1,13 +1,12 @@
-import {InstrumentSelectorModel} from "./InstrumentSelector.model";
+import {InstrumentSelectorModel} from "./InstrumentSelectorModel";
 import {Instrument} from "../../types/instrument";
 
-interface Props {
+type Props = {
   instruments: Instrument[];
-  handleCameraChange: (cameraNewPosX: number) => void;
   instrumentsGap: number;
 }
 
-export function InstrumentSelectorWheel({instruments, handleCameraChange, instrumentsGap}: Props) {
+export const InstrumentSelectorWheel = ({instruments, instrumentsGap}: Props) => {
   return <group>
     {instruments.map((instrument, index) => 
       <InstrumentSelectorModel key={index} name={instrument.modelName} instrumentNumber={index} instrumentsCount={instruments.length} instrumentsGap={instrumentsGap}/>

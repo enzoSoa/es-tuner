@@ -1,8 +1,8 @@
 import {Icon, Icons, Text, TextType} from "../../ui";
-import {logoStyle} from "./Header.style";
+import {logoStyle} from "./style";
 import {useEffect, useState} from "react";
 
-export function HeaderLogo() {
+export const HeaderLogo = () => {
   const windowMediaQuery = window.matchMedia('(max-width: 768px)');
   const [isPhoneFormat, setIsPhoneFormat] = useState(windowMediaQuery.matches);
 
