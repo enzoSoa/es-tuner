@@ -8,7 +8,7 @@ import { GrabHandlerContext, getAngleCoordinates } from "../../utils";
 export const InstrumentSelector = () => {
   const ref = useRef<HTMLCanvasElement>(null);
   const {setGrabTarget} = useContext(GrabHandlerContext);
-  const instrumentsGap = 0.125;
+  const instrumentsGap = 0.08;
   const instruments = [
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
@@ -17,11 +17,23 @@ export const InstrumentSelector = () => {
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"}
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
+    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
   ]
   const camera = useMemo(() => {
-    const initialCamera = new PerspectiveCamera(20, (ref.current?.height ?? 1) / (ref.current?.width ?? 1), .01, 40000000);
-    const {x, y} = getAngleCoordinates(instruments.length * (instrumentsGap + 3 / instruments.length) , 0)
+    const initialCamera = new PerspectiveCamera(60, (ref.current?.height ?? 1) / (ref.current?.width ?? 1), .01, 40000000);
+    const {x, y} = getAngleCoordinates(instruments.length * (instrumentsGap + 1 / instruments.length) , 0)
 
     initialCamera.position.set(x, y, 0);
     initialCamera.lookAt(new Vector3(0, 0, 0));
