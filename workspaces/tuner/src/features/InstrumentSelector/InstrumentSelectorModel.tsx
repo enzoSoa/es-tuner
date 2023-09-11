@@ -2,7 +2,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {useLoader} from "@react-three/fiber";
 import {useMemo} from "react";
-import {degreeToRadiant, getAngleCoordinates} from "../../utils";
+import {degreeToRadiant, getCoordinatesFromAngle} from "../../utils";
 
 type Props = {
   name: string;
@@ -26,7 +26,7 @@ export const InstrumentSelectorModel = ({name, instrumentNumber, instrumentsCoun
     const group = scene.clone();
     const radius = instrumentsCount * instrumentsGap;
     const angle = degreeToRadiant(360 / instrumentsCount * instrumentNumber);
-    const {x, y} = getAngleCoordinates(radius, angle);
+    const {x, y} = getCoordinatesFromAngle(radius, angle);
 
     group.position.set(x, y, 0);
     group.rotation.set(degreeToRadiant(-90), angle, 0);

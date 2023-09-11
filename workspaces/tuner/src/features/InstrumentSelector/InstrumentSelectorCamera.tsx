@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { GrabHandlerContext, degreeToRadiant, getAngleCoordinates, getCloserAngle } from "../../utils";
+import { GrabHandlerContext, degreeToRadiant, getCoordinatesFromAngle, getCloserAngle, getAngleFromCoordinates } from "../../utils";
 import { useFrame } from "@react-three/fiber";
 
 type Props = {
@@ -12,16 +12,17 @@ export const InstrumentSelectorCamera = ({instrumentsGap, instrumentsCount}: Pro
   const {setOnGrabMovementHandler} = useContext(GrabHandlerContext);
 
   useFrame(({camera}) => {
-    const currentCameraAngle = Math.atan2(camera.position.x, camera.position.y);
+    const currentCameraAngle = getAngleFromCoordinates(camera.position.x, camera.position.y);
     const aimedCameraAngle = degreeToRadiant(360 / instrumentsCount * aimedInstrument);
 
     const newCameraAngle = getCloserAngle(currentCameraAngle, aimedCameraAngle);
-    const {x, y} = getAngleCoordinates(instrumentsCount * (instrumentsGap + 1 / instrumentsCount) , newCameraAngle)
+    const {x, y} = getCoordinatesFromAngle(instrumentsCount * (instrumentsGap + 1 / instrumentsCount) , newCameraAngle)
 
-    if (newCameraAngle > 0) camera.rotateZ(degreeToRadiant(-90)) 
-    else if (newCameraAngle < 0) camera.rotateZ(degreeToRadiant(90))
-    camera.lookAt(0, 0, 0);
+    console.log(currentCameraAngle,newCameraAngle);
     camera.position.set(x, y, 0);
+    camera.lookAt(0, 0, 0);
+    if (newCameraAngle !== 0) camera.rotateZ(degreeToRadiant(-90)) 
+    else if (newCameraAngle < 0) camera.rotateZ(degreeToRadiant(90))
   })
 
   useEffect(() => {
