@@ -1,0 +1,1 @@
+export const getCoordinatesAngle = (x: number, y: number): number => Math.atan2(x, y)

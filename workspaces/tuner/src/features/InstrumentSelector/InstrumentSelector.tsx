@@ -3,7 +3,7 @@ import {InstrumentSelectorWheel} from "./InstrumentSelectorWheel";
 import {PerspectiveCamera, Vector3} from "three";
 import {useContext, useEffect, useMemo, useRef} from "react";
 import { InstrumentSelectorCamera } from "./InstrumentSelectorCamera";
-import { GrabHandlerContext, getAngleCoordinates } from "../../utils";
+import { GrabHandlerContext, degreeToRadiant, getAngleCoordinates } from "../../utils";
 
 export const InstrumentSelector = () => {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -18,22 +18,10 @@ export const InstrumentSelector = () => {
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
     {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
-    {name: 'classical guitar', attribute: "6 strings", modelName: "guitar"},
   ]
   const camera = useMemo(() => {
     const initialCamera = new PerspectiveCamera(60, (ref.current?.height ?? 1) / (ref.current?.width ?? 1), .01, 40000000);
-    const {x, y} = getAngleCoordinates(instruments.length * (instrumentsGap + 1 / instruments.length) , 0)
+    const {x, y} = getAngleCoordinates(instruments.length * (instrumentsGap + 1 / instruments.length) , 0.001)
 
     initialCamera.position.set(x, y, 0);
     initialCamera.lookAt(new Vector3(0, 0, 0));
