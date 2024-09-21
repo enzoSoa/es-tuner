@@ -1,0 +1,20 @@
+name: ES Tuner Deployment
+on: [push]
+jobs:
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+  List-Files:
+    needs: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: List files
+        run: ls ${{ github.workspace }}
+  Say-Hello:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          greetings: ${{ secrets.GREETINGS }}
+        run: echo Hello $greetings
