@@ -5,6 +5,11 @@ terraform {
       version = "~> 5.68"
     }
   }
+  backend "s3" {
+    bucket = "es-tuner-terraform-state"
+    key = "terraform.tfstate"
+    region = "eu-west-1" 
+  }
 }
 
 provider "aws" {
